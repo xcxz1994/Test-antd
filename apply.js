@@ -116,13 +116,20 @@ export default class Apply extends Component {
                                 <div style={{height:20}}></div>
                                 <Col span={6}><div>岗位</div></Col>
                                 <Col>
-                                    <Select defaultValue="研发部" style={{ width: 160}} id="work" onChange={value => this.handleChange2(value)} >
+                                    <Select style={{ width: 160}} id="work" onChange={value => this.handleChange2(value)} >
                                         <Option value="技术部">技术部</Option>
                                         <Option value="客服部(净水器)">客服部(净水器)</Option>
-                                        <Option value="客服部3部">客服部3部</Option>
-                                        <Option value="客服部2部">客服部3部</Option>
+                                        <Option value="客服2部(晾衣架)">客服2部(晾衣架)</Option>
+                                        <Option value="客服3部(浴霸)">客服3部(浴霸)</Option>
+                                        <Option value="客服4部(马桶)">客服4部(马桶)</Option>
+                                        <Option value="客服5部">客服5部</Option>
+                                        <Option value="财务部">财务部</Option>
                                         <Option value="业务部" >业务部</Option>
-                                        <Option value="工程部">工程部</Option>
+                                        <Option value="综合部" >综合部</Option>
+                                        <Option value="滤芯组" >滤芯组</Option>
+                                        <Option value="线下拓展部" >线下扩展部</Option>
+                                        <Option value="市场推广部" >市场推广部</Option>
+                                        <Option value="外包兼职" >外包兼职</Option>
                                     </Select>
                                 </Col>
 
@@ -138,8 +145,9 @@ export default class Apply extends Component {
                                     <Select defaultValue="病假" style={{ width: 160 }} id="applyclass" onChange={value => this.handleChange4(value)}>
                                         <Option value="病假">病假</Option>
                                         <Option value="产假">产假</Option>
-                                        <Option value="disabled" disabled>Disabled</Option>
-                                        <Option value="婚假">婚假</Option>
+                                        <Option value="休假">休假</Option>
+                                        <Option value="事假">事假</Option>
+                                        <Option value="离职">离职</Option>
                                     </Select>
                                 </Col>
 
