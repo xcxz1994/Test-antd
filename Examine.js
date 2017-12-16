@@ -1,9 +1,18 @@
 import React,{Component} from 'react';
 
-import { Card, Col, Row ,Button} from 'antd';
+import { Card, Col, Row ,Button,Table,Modal,Input} from 'antd';
 import  Common from './ajaxMethod';
 
+const { TextArea } = Input;
 
+const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+    },
+    getCheckboxProps: record => ({
+        disabled: record.name === 'Disabled User', // Column configuration not to be checked
+    }),
+};
 export default class Examines extends Component{
 
 
@@ -11,41 +20,155 @@ export default class Examines extends Component{
 
         super(props);
         this.state = {
-            date: '',
-            person:'',
-            work:'',
-            applyclass:'',
-            otherinfo:'',
-            applytime1:'',
-            applytime2:'',
-            timecount:''
+           data:'',
+            filteredInfo: null,
+            sortedInfo: null,
+            visible: false
         }
     }
+    handleChange = (pagination, filters, sorter) => {
+        console.log('Various parameters', pagination, filters, sorter);
+        this.setState({
+            filteredInfo: filters,
+            sortedInfo: sorter,
+        });
+    }
+    componentWillMount()  {
+
+        let _this=this;
+        //console.log("aaaaaaaa");
+
+        var data2={
+            action:"queryTaskOfManager",
+            name:'john'
+        };
+        Common.getData(JSON.stringify(data2),function(ret) {
+            console.log(ret);
+            console.log("渲染界面")
+            _this.setState({data:ret.msg})
 
 
+
+        });
+    }
     ApplyToo(){
         const w=window.open('about:blank');
         w.location.href='/';
 
     }
+    Submityes(){
+        var data={
+            state:'yes'
+        };
+        Common.examine(JSON.stringify(data),function (ret) {
+            if(ret=='success'){
+                alert("已批准");
+            }else{
+                alert("发生未知的错误");
+            }
+        });
+    }
+    showModal = () => {
+        this.setState({
+            visible: true,
+        });
+    }
+    handleOk = (e) => {
+        console.log(e);
+        var nodata={
+            nowhy:this.state.otherinfo,
+        };
+        Common.examine(JSON.stringify(nodata),function (ret) {
+            if(ret=='success'){
+                console.log("不批准原因已经提交")
+            }else{
+                alert("发生未知的错误");
+            }
+        });
+        this.setState({
+            visible: false,
+        });
+    }
+    handleCancel = (e) => {
+        console.log(e);
+        this.setState({
+            visible: false,
+        });
+    }
+    handleChange5(otherinfo) {
+        this.setState({otherinfo:otherinfo});
 
+    }
     render(){
-
-
-        var items = [];
-        for (var i = 0; i < 10; i++) {
-            items.push(<OneTask person={this.state.person}/>);
+        let { sortedInfo, filteredInfo } = this.state;
+        sortedInfo = sortedInfo || {};
+        filteredInfo = filteredInfo || {};
+        const columns = [{
+            title: '申请人',
+            dataIndex: 'name',
+            render: text => <a href="#">{text}</a>,
+        }, {
+            title: '申请时间',
+            key: 'askDate',
+            sorter: (a, b) => a.age - b.age,
+            sortOrder: sortedInfo.columnKey === 'askDate' && sortedInfo.order,
+            dataIndex: 'askDate',
+        }, {
+            title: '岗位',
+            dataIndex: 'department',
+        },{
+            title: '请假类型',
+            width: '8%',
+            dataIndex: 'askType',
+        },{
+            title: '请假备注',
+            width: '10%',
+            dataIndex: 'askRemark',
+        },{
+            title: '请假时间',
+            width:"10%",
+            align:"center",
+            colSpan: 2,
+            dataIndex: 'leaveDate1',
+        },{
+            colSpan: 0,
+            width:"10%",
+            dataIndex: 'leaveDate2',
+        },{
+            title: '共请假天数',
+            dataIndex: 'leaveDateCount',
+            width: '8%',
+        },{
+            title: '是否批准',
+            width: '3%',
+            colSpan: 2,
+            render: () => <Button type="primary"  id="yes" onClick={this.Submityes.bind(this)}>批准</Button>,
+        }, {
+            colSpan: 0,
+            width: '3%',
+            render: () => <Button type="danger"  id="no" onClick={this.showModal.bind(this)}>不批</Button>,
         }
+        ];
+        console.log(this.state.data);
+
         return(
 
             <div style={{ background: '#ECECEC', padding: '30px' }} onLoad={this.componentWillMount}>
                 <Row>
                     <Button type="primary" style={{marginLeft:530,marginBottom:20}} onClick={this.ApplyToo.bind(this)}>我也要请假</Button>
                 </Row>
-            <Row gutter={16}>
 
-                {items}
-            </Row>
+                <Table bordered rowSelection={rowSelection} columns={columns}  dataSource={this.state.data}  onChange={this.handleChange}  style={{backgroundColor:'#FFFFFF'}}/>\
+
+                <Modal
+                    title="不批原因备注"
+                    visible={this.state.visible}
+                    onOk={this.handleOk}
+                    onCancel={this.handleCancel}
+                >
+                    <TextArea rows={4} style={{width:160}} id="otherinfo" onChange={value => this.handleChange5(value.target.value)}/>
+                </Modal>
+
             </div>
 
         );
@@ -54,70 +177,6 @@ export default class Examines extends Component{
 
 }
 
-class OneTask extends React.Component{
-    constructor(props) {
 
-        super(props);
-        this.state = {
-            date: '',
-            person:'',
-            work:'',
-            applyclass:'',
-            otherinfo:'',
-            applytime1:'',
-            applytime2:'',
-            timecount:''
-        }
-    }
-    componentDidMount()  {
-
-        let _this=this;
-        //console.log("aaaaaaaa");
-
-        var data2={
-            action:"queryTaskOfManager"
-        };
-        var data3={};
-        var lastdata={};
-        Common.getData(JSON.stringify(data2),function aa(ret) {
-            console.log(ret);
-            data3= eval(ret);
-            lastdata=data3.msg[0];
-            //console.log(lastdata);
-            _this.setState({
-                person:lastdata.name,
-                date:lastdata.askDate
-            })
-        });
-
-
-
-    }
-    render(){
-
-        return (
-            <Col span={8}>
-                <Card title="请假申请单" bordered={false}>
-                    <p>申请人：{this.state.person}</p>
-                    <p>申请时间：{this.state.date}</p>
-                    <p>岗位：{this.state.work}</p>
-                    <p>请假类型：{this.state.applyclass}</p>
-                    <p>请假备注：{this.state.otherinfo}</p>
-                    <p>请假时间：{this.state.applytime1}到,{this.state.applytime2}</p>
-                    <p>共请假：{this.state.timecount}天</p>
-                    <Row gutter={16}>
-                        <Col span={12}>
-                            <Button type="primary"  id="apply">批准</Button>
-
-                        </Col>
-                        <Col span={12}>
-                            <Button type="danger" style={{marginLeft:30}} id="cancel">不批</Button>
-                        </Col>
-                    </Row>
-                </Card>
-            </Col>
-
-        )}
-}
 
 // ReactDOM.render(<Examines />, document.getElementById('root'));
