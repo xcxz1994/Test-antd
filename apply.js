@@ -7,6 +7,7 @@ import  Common from './ajaxMethod';
 
 function onChange(value) {
     console.log(value);
+    //山东师范
 }
 const columns = [{
     title: '申请时间',
@@ -51,7 +52,13 @@ export default class Apply extends Component {
              type:"1"
          };
 
-        Common.test(JSON.stringify(data));
+        Common.test(JSON.stringify(data),function (ret) {
+            if(ret=='success'){
+                alert("申请成功");
+            }else{
+                alert("申请失败");
+            }
+        });
 
 //console.log(this.state.name)
     }
@@ -188,7 +195,7 @@ export default class Apply extends Component {
                                     <h1 style={{marginLeft:100,marginBottom:50}}>当前请假单状态</h1>
                                     <Col span={8}><div>是否批准</div></Col>
                                     <Col style={{marginTop:30}}>
-                                        <Progress type="circle" status="exception" percent={50} />
+                                        <Progress type="circle" percent={100} />
                                     </Col>
                                     <div style={{height:20}}></div>
                                     <Card title="批准人" bordered={false} style={{ width: 300 }}>
