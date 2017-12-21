@@ -125,18 +125,20 @@ export default class Apply extends Component {
                                 <Col>
                                     <Select style={{ width: 160}} id="work" onChange={value => this.handleChange2(value)} >
                                         <Option value="技术部">技术部</Option>
-                                        <Option value="客服部(净水器)">客服部(净水器)</Option>
-                                        <Option value="客服2部(晾衣架)">客服2部(晾衣架)</Option>
-                                        <Option value="客服3部(浴霸)">客服3部(浴霸)</Option>
-                                        <Option value="客服4部(马桶)">客服4部(马桶)</Option>
-                                        <Option value="客服5部">客服5部</Option>
+                                        <Option value="开发部">开发部</Option>
+                                        <Option value="专响1部">专响1部</Option>
+                                        <Option value="专响2部">专响2部</Option>
+                                        <Option value="业务中心" >业务中心</Option>
+                                        <Option value="客服中心" >客服中心</Option>
+                                        <Option value="市场中心" >市场中心</Option>
+                                        <Option value="市场部">市场部</Option>
                                         <Option value="财务部">财务部</Option>
-                                        <Option value="业务部" >业务部</Option>
                                         <Option value="综合部" >综合部</Option>
-                                        <Option value="滤芯组" >滤芯组</Option>
-                                        <Option value="线下拓展部" >线下扩展部</Option>
-                                        <Option value="市场推广部" >市场推广部</Option>
-                                        <Option value="外包兼职" >外包兼职</Option>
+                                        <Option value="结单部" >结单部</Option>
+                                        <Option value="线下拓展部" >线下拓展部</Option>
+                                        <Option value="服务营销部" >服务营销部</Option>
+                                        <Option value="接单部" >接单部</Option>
+                                        <Option value="仓管部">仓管部</Option>
                                     </Select>
                                 </Col>
 

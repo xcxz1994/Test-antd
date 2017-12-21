@@ -165,11 +165,11 @@ export default class Examines extends Component{
             title: '是否批准',
             width: '3%',
             colSpan: 2,
-            render: () => <Button type="primary"  id="yes" onClick={this.Submityes.bind(this)}>批准</Button>,
+            render: () => <Button type="primary"  id="yes" onRowClick={this.Submityes.bind(this)}>批准</Button>,
         }, {
             colSpan: 0,
             width: '3%',
-            render: () => <Button type="danger"  id="no" onClick={this.showModal.bind(this)}>不批</Button>,
+            render: () => <Button type="danger"  id="no" onClick={this.showModal.bind(this)} onRowClick={this.handleOk.bind(this)}>不批</Button>,
         }
         ];
         console.log(this.state.data);
@@ -181,7 +181,7 @@ export default class Examines extends Component{
                     <Button type="primary" style={{marginLeft:530,marginBottom:20}} onClick={this.ApplyToo.bind(this)}>我也要请假</Button>
                 </Row>
 
-                <Table bordered rowSelection={rowSelection} columns={columns}  dataSource={this.state.data}  onChange={this.handleChange}  style={{backgroundColor:'#FFFFFF'}} onRowClick={this.onSelect.bind(this) || this.handleOk.bind(this)}/>
+                <Table bordered rowSelection={rowSelection} columns={columns}  dataSource={this.state.data}  onChange={this.handleChange}  style={{backgroundColor:'#FFFFFF'}} />
 
                 <Modal
                     title="不批原因备注"
