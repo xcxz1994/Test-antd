@@ -1,3 +1,4 @@
+
 import React,{Component} from 'react';
 
 import { Card, Col, Row ,Button,Table,Modal,Input} from 'antd';
@@ -20,7 +21,7 @@ export default class Examines extends Component{
 
         super(props);
         this.state = {
-           data:'',
+            data:'',
             filteredInfo: null,
             sortedInfo: null,
             visible: false
@@ -57,32 +58,29 @@ export default class Examines extends Component{
 
     }
     Submityes(){
-        var data={
-            state:'yes'
-        };
-        Common.examine(JSON.stringify(data),function (ret) {
-            if(ret=='success'){
-                alert("已批准");
-            }else{
-                alert("发生未知的错误");
-            }
-        });
+
     }
     showModal = () => {
         this.setState({
             visible: true,
         });
     }
-    handleOk = (e) => {
+    handleOk = (e,record) => {
         console.log(e);
         var nodata={
-            nowhy:this.state.otherinfo,
+            action:'taskProcess',
+            id:record.id,
+            isAllowed:-1,
+            department:record.department,
+            approver:'john',
+            approverAccount:'john',
+            approvalRemark:this.state.otherinfo,
         };
         Common.examine(JSON.stringify(nodata),function (ret) {
             if(ret=='success'){
                 console.log("不批准原因已经提交")
             }else{
-                alert("发生未知的错误");
+                alert("发生未知的不批准错误");
             }
         });
         this.setState({
@@ -99,6 +97,31 @@ export default class Examines extends Component{
         this.setState({otherinfo:otherinfo});
 
     }
+    onSelect(record){
+
+        var yesdata={
+            action:'taskProcess',
+            id:record.id,
+            isAllowed:1,
+            department:record.department,
+            approver:'john',
+            approverAccount:'john',
+            approvalRemark:null
+        };
+        Common.examine(JSON.stringify(yesdata),function (ret) {
+            if(ret=='success'){
+                alert("已批准");
+            }else{
+                alert("发生未知的错误");
+            }
+        });
+
+
+        console.log(record);
+
+
+    }
+
     render(){
         let { sortedInfo, filteredInfo } = this.state;
         sortedInfo = sortedInfo || {};
@@ -158,7 +181,7 @@ export default class Examines extends Component{
                     <Button type="primary" style={{marginLeft:530,marginBottom:20}} onClick={this.ApplyToo.bind(this)}>我也要请假</Button>
                 </Row>
 
-                <Table bordered rowSelection={rowSelection} columns={columns}  dataSource={this.state.data}  onChange={this.handleChange}  style={{backgroundColor:'#FFFFFF'}}/>\
+                <Table bordered rowSelection={rowSelection} columns={columns}  dataSource={this.state.data}  onChange={this.handleChange}  style={{backgroundColor:'#FFFFFF'}} onRowClick={this.onSelect.bind(this) || this.handleOk.bind(this)}/>
 
                 <Modal
                     title="不批原因备注"

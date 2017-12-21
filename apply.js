@@ -49,7 +49,7 @@ export default class Apply extends Component {
                 leaveDate1:this.state.applytime1,
                leaveDate2:this.state.applytime2,
              leaveDateCount:this.state.inputValue,
-             type:"1"
+             leixing:"1"
          };
 
         Common.test(JSON.stringify(data),function (ret) {

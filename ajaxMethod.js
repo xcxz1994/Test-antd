@@ -5,10 +5,10 @@ var Common;
 Common = {
     test: function (data1,successCallback) {
 
-        //alert(JSON.parse(data1));
+        console.log(JSON.parse(data1));
         $.ajax({
             type:"GET",
-            url:"http://192.168.1.144:8080/WebApplication2/askForLeaveServlet",
+            url:"http://192.168.1.144:8080/WebApplication4/askForLeaveServlet",
             data: JSON.parse(data1),
         success: function (data, textStatus, jqXHR) {
                 console.log(data);
@@ -27,13 +27,12 @@ Common = {
     },
     getData: function (data2,successCallback) {
 
-        //alert(data2);
+        //console.log(JSON.parse(data2));
         $.ajax({
-            url: ' http://192.168.1.144:8080/WebApplication2/askForLeaveServlet',
+            url: ' http://192.168.1.144:8080/WebApplication4/askForLeaveServlet',
             type: 'GET',
-
             data:JSON.parse(data2),
-            timeout: 1000,
+            //timeout: 1000,
 
             beforeSend: LoadFunction, //加载执行方法
             error: erryFunction,  //错误执行方法
@@ -61,7 +60,7 @@ Common = {
 
         //alert(data2);
         $.ajax({
-            url: ' http://192.168.1.144:8080/WebApplication2/askForLeaveServlet',
+            url: ' http://192.168.1.144:8080/WebApplication4/askForLeaveServlet',
             type: 'GET',
 
             data:JSON.parse(data2),
