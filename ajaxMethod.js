@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-var tourl='http://10.11.237.153:8080/WebApplication4/askForLeaveServlet';
+var tourl='http://192.168.1.144:8080/WebApplication4/askForLeaveServlet';
 var Common;
 Common = {
     test: function (data1,successCallback) {

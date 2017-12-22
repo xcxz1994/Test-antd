@@ -1,4 +1,3 @@
-
 import React,{Component} from 'react';
 
 import { Card, Col, Row ,Button,Table,Modal,Input} from 'antd';
@@ -6,16 +5,8 @@ import  Common from './ajaxMethod';
 
 const { TextArea } = Input;
 
-const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-    },
-    getCheckboxProps: record => ({
-        disabled: record.name === 'Disabled User', // Column configuration not to be checked
-    }),
-};
-export default class Examines extends Component{
 
+export default class Examines extends Component{
 
     constructor(props) {
 
@@ -27,9 +18,11 @@ export default class Examines extends Component{
             visible: false,
             otherinfo:'',
             ok:0,
-            yes:0
+            yes:0,
+            rowdata:[]
         }
     }
+
     handleChange = (pagination, filters, sorter) => {
         console.log('Various parameters', pagination, filters, sorter);
         this.setState({
@@ -38,7 +31,7 @@ export default class Examines extends Component{
         });
     }
     componentWillMount()  {
-
+        console.log(this.state.data);
         let _this=this;
         //console.log("aaaaaaaa");
 
@@ -61,10 +54,36 @@ export default class Examines extends Component{
 
     }
 
-    showModal = () => {
-        this.setState({
+    showModal = (record) => {
+        let _this=this;
+        record=_this.state.rowdata[0][0];
+        var delay = function(){
+
+            var nodata={
+                action:'taskProcess',
+                id:record.id,
+                isAllowed:-1,
+                department:record.department,
+                name:'john',
+                approverAccount:'john',
+                approvalRemark:_this.state.otherinfo
+            };
+            if(_this.state.ok==1){
+                console.log(_this.state.otherinfo)
+                Common.examine(JSON.stringify(nodata),function (ret) {
+                    if(ret=='success'){
+                        console.log("不批准原因已经提交")
+                    }else{
+                        alert("发生未知的不批准错误");
+                    }
+                });
+            } else{setTimeout(function(){delay()}, 100)}
+        }
+        _this.setState({
             visible: true,
         });
+        console.log("发送不批准信息");
+        delay();
     }
     handleOk = (e) => {
         console.log(e);
@@ -84,46 +103,20 @@ export default class Examines extends Component{
         this.setState({otherinfo:otherinfo});
 
     }
-    onSelect(record){
+    Select(record){
 
-         let _this=this;
+        let _this=this;
+        record=_this.state.rowdata[0][0];
+        console.log(record);
         var yesdata={
             action:'taskProcess',
             id:record.id,
             isAllowed:1,
             department:record.department,
-            approver:'john',
+            name:'john',
             approverAccount:'john',
             approvalRemark:null
         };
-
-        var delay = function(){
-            var nodata={
-                action:'taskProcess',
-                id:record.id,
-                isAllowed:-1,
-                department:record.department,
-                approver:'john',
-                approverAccount:'john',
-                approvalRemark:_this.state.otherinfo,
-            };
-            if(_this.state.ok==1){
-                console.log(_this.state.otherinfo)
-                Common.examine(JSON.stringify(nodata),function (ret) {
-                    if(ret=='success'){
-                        console.log("不批准原因已经提交")
-                    }else{
-                        alert("发生未知的不批准错误");
-                    }
-                });
-            } else{setTimeout(function(){delay()}, 100)}
-        }
-        if(_this.state.visible==false){
-            console.log("发送不批准信息");
-            delay();
-
-        }
-        if(_this.state.yes==1){
             Common.examine(JSON.stringify(yesdata),function (ret) {
                 if(ret=='success'){
                     alert("已批准");
@@ -131,20 +124,17 @@ export default class Examines extends Component{
                     alert("发生未知的错误");
                 }
             });
-        }
-
-
-
-        console.log(record);
-
-
-    }
-    hangyes=()=>{
-        this.setState({
-            yes:1
-        });
+        //console.log(record);
     }
     render(){
+        const rowSelection = {
+
+            onChange: (selectedRowKeys, selectedRows) => {
+                console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+                this.state.rowdata.push(selectedRows);
+                console.log(this.state.rowdata);
+            },
+        };
         let { sortedInfo, filteredInfo } = this.state;
         sortedInfo = sortedInfo || {};
         filteredInfo = filteredInfo || {};
@@ -183,27 +173,28 @@ export default class Examines extends Component{
             title: '共请假天数',
             dataIndex: 'leaveDateCount',
             width: '8%',
-        },{
-            title: '是否批准',
-            width: '3%',
-            colSpan: 2,
-            render: () => <Button type="primary"  id="yes" onClick={this.hangyes.bind(this)}>批准</Button>,
-        }, {
-            colSpan: 0,
-            width: '3%',
-            render: () => <Button type="danger"  id="no" onClick={this.showModal.bind(this)}>不批</Button>,
-        }
+        },
         ];
-        console.log(this.state.data);
+
 
         return(
 
             <div style={{ background: '#ECECEC', padding: '30px' }} onLoad={this.componentWillMount}>
-                <Row>
-                    <Button type="primary" style={{marginLeft:530,marginBottom:20}} onClick={this.ApplyToo.bind(this)}>我也要请假</Button>
+                <Row gutter={16}>
+                    <Col span={8}>
+                        <Button type="primary" style={{marginLeft:530,marginBottom:20}} onClick={this.ApplyToo.bind(this)}>我也要请假</Button>
+
+                    </Col>
+                    <Col span={8}>
+                        <Button type="primary" onClick={this.Select.bind(this)}>批准</Button>
+                    </Col>
+                    <Col span={8}>
+                        <Button type="danger" onClick={this.showModal.bind(this)}>不批</Button>
+                    </Col>
+
                 </Row>
 
-                <Table bordered rowSelection={rowSelection} columns={columns}  dataSource={this.state.data}  onChange={this.handleChange}  style={{backgroundColor:'#FFFFFF'}} onRowClick={this.onSelect.bind(this)}/>
+                <Table bordered rowSelection={rowSelection} columns={columns}  dataSource={this.state.data}  onChange={this.handleChange}  style={{backgroundColor:'#FFFFFF'}} />
 
                 <Modal
                     title="不批原因备注"
@@ -226,18 +217,3 @@ export default class Examines extends Component{
 
 // ReactDOM.render(<Examines />, document.getElementById('root'));
 
-// switch (_this.state.ok){
-//     case _this.state.ok=1:
-//         console.log("发送不批准信息");
-//         delay();
-//         break;
-//     case _this.state.ok=0:
-//         Common.examine(JSON.stringify(yesdata),function (ret) {
-//             if(ret=='success'){
-//                 alert("已批准");
-//             }else{
-//                 alert("发生未知的错误");
-//             }
-//         });
-//         break;
-// }
