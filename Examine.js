@@ -37,7 +37,8 @@ export default class Examines extends Component{
 
         var data2={
             action:"queryTaskOfManager",
-            name:'john'
+            name:'john',
+            test:['chunyu','john']
         };
         Common.getData(JSON.stringify(data2),function(ret) {
             console.log(ret);
@@ -188,14 +189,13 @@ export default class Examines extends Component{
 
             <div style={{ background: '#ECECEC', padding: '30px' }} onLoad={this.componentWillMount}>
                 <Row gutter={16}>
-                    <Col span={8}>
-                        <Button type="primary" style={{marginLeft:530,marginBottom:20}} onClick={this.ApplyToo.bind(this)}>我也要请假</Button>
-
+                    <Col span={2}>
+                        <Button type="primary" onClick={this.ApplyToo.bind(this)}>我也要请假</Button>
                     </Col>
-                    <Col span={8}>
+                    <Col span={2}>
                         <Button type="primary" onClick={this.Select.bind(this)}>批准</Button>
                     </Col>
-                    <Col span={8}>
+                    <Col span={2}>
                         <Button type="danger" onClick={this.showModal.bind(this)}>不批</Button>
                     </Col>
 

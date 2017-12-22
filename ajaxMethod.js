@@ -27,10 +27,11 @@ Common = {
     },
     getData: function (data2,successCallback) {
 
-        //console.log(JSON.parse(data2));
+        console.log(JSON.parse(data2));
         $.ajax({
             url: tourl,
             type: 'GET',
+            traditional:true,
             data:JSON.parse(data2),
             //timeout: 1000,
 
