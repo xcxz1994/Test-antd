@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-
+var tourl='http://10.11.237.153:8080/WebApplication4/askForLeaveServlet';
 var Common;
 Common = {
     test: function (data1,successCallback) {
@@ -8,7 +8,7 @@ Common = {
         console.log(JSON.parse(data1));
         $.ajax({
             type:"GET",
-            url:"http://192.168.1.144:8080/WebApplication4/askForLeaveServlet",
+            url:tourl,
             data: JSON.parse(data1),
         success: function (data, textStatus, jqXHR) {
                 console.log(data);
@@ -29,7 +29,7 @@ Common = {
 
         //console.log(JSON.parse(data2));
         $.ajax({
-            url: ' http://192.168.1.144:8080/WebApplication4/askForLeaveServlet',
+            url: tourl,
             type: 'GET',
             data:JSON.parse(data2),
             //timeout: 1000,
@@ -61,7 +61,7 @@ Common = {
         //alert(data2);
         $.ajax({
             type:"GET",
-            url:"http://192.168.1.144:8080/WebApplication4/askForLeaveServlet",
+            url:tourl,
             data: JSON.parse(data2),
             success: function (data, textStatus, jqXHR) {
                 console.log(data);
