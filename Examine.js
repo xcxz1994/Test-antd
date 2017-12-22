@@ -115,6 +115,7 @@ export default class Examines extends Component{
             department:record.department,
             name:'john',
             approverAccount:'john',
+
             approvalRemark:null
         };
             Common.examine(JSON.stringify(yesdata),function (ret) {
