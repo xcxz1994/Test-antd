@@ -72,7 +72,8 @@ export default class Examines extends Component{
                 console.log(_this.state.otherinfo)
                 Common.examine(JSON.stringify(nodata),function (ret) {
                     if(ret=='success'){
-                        console.log("不批准原因已经提交")
+                        alert("不批准的备注已经发送")
+                        window.location.reload();
                     }else{
                         alert("发生未知的不批准错误");
                     }
@@ -84,7 +85,9 @@ export default class Examines extends Component{
         });
         console.log("发送不批准信息");
         delay();
+
     }
+
     handleOk = (e) => {
         console.log(e);
         this.setState({
@@ -106,9 +109,11 @@ export default class Examines extends Component{
     Select(record){
 
         let _this=this;
-        record=_this.state.rowdata[0][0];
-        console.log(record);
-        var yesdata={
+
+        for(let i=0;i<_this.state.rowdata[0].length;i++){
+            record=_this.state.rowdata[0][i];
+            console.log(record);
+            var yesdata={
             action:'taskProcess',
             id:record.id,
             isAllowed:1,
@@ -121,11 +126,12 @@ export default class Examines extends Component{
             Common.examine(JSON.stringify(yesdata),function (ret) {
                 if(ret=='success'){
                     alert("已批准");
+                    window.location.reload();
                 }else{
                     alert("发生未知的错误");
                 }
             });
-        //console.log(record);
+        }
     }
     render(){
         const rowSelection = {
