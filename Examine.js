@@ -51,20 +51,37 @@ export default class Examines extends Component{
     //当点击不批时调用的函数，传被选中的行的参数给服务器端，成功后自动刷新页面
     showModal = (record) => {
         let _this=this;
-        record=_this.state.rowdata[0][0];
-        var delay = function(){
+        var iddata=[];
+        var departmentdata=[];
+        var isAllowdata=[];
+        var namedata=[];
+        var approverAccountdata=[];
 
+        for(let i=0;i<_this.state.rowdata[0].length;i++){
+            record=_this.state.rowdata[0];
+            console.log(record);
+            iddata.push(record[i].id);
+            departmentdata.push(record[i].department);
+            isAllowdata.push(1)
+            namedata.push('john');
+            approverAccountdata.push('john');
+
+        }
+        var delay = function(){
             var nodata={
                 action:'taskProcess',
-                id:record.id,
-                isAllowed:-1,
-                department:record.department,
-                name:'john',
-                approverAccount:'john',
-                approvalRemark:_this.state.otherinfo
+                id:iddata,
+                isAllowed:isAllowdata,
+                department:departmentdata,
+                name:namedata,
+                approverAccount:approverAccountdata,
+                approvalRemark:[_this.state.otherinfo],
+                approver:approverAccountdata,
+
             };
             if(_this.state.ok==1){
-                console.log(_this.state.otherinfo)
+               // console.log(_this.state.otherinfo);
+                console.log(nodata);
                 Common.examine(JSON.stringify(nodata),function (ret) {
                     if(ret=='success'){
                         alert("不批准的备注已经发送")
@@ -130,9 +147,10 @@ export default class Examines extends Component{
             department:departmentdata,
             name:namedata,
             approverAccount:approverAccountdata,
-            approvalRemark:approvalRemarkdata
+            approvalRemark:approvalRemarkdata,
+            approver:approverAccountdata
         };
-        console.log(yesdata);
+        console.log(yesdata)
         Common.examine(JSON.stringify(yesdata),function (ret) {
             if(ret=='success'){
                 alert("已批准");
