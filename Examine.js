@@ -1,15 +1,11 @@
 import React,{Component} from 'react';
-
-import { Card, Col, Row ,Button,Table,Modal,Input} from 'antd';
+import {Col, Row ,Button,Table,Modal,Input} from 'antd';
 import  Common from './ajaxMethod';
-
 const { TextArea } = Input;
 
 
 export default class Examines extends Component{
-
     constructor(props) {
-
         super(props);
         this.state = {
             data:'',
@@ -22,7 +18,7 @@ export default class Examines extends Component{
             rowdata:[]
         }
     }
-
+    //用于表格排序
     handleChange = (pagination, filters, sorter) => {
         console.log('Various parameters', pagination, filters, sorter);
         this.setState({
@@ -30,31 +26,29 @@ export default class Examines extends Component{
             sortedInfo: sorter,
         });
     }
+    //页面加载之前，请求服务器端的数据
     componentWillMount()  {
         console.log(this.state.data);
         let _this=this;
-        //console.log("aaaaaaaa");
 
         var data2={
             action:"queryTaskOfManager",
             name:'john',
-            test:['chunyu','john']
+
         };
         Common.getData(JSON.stringify(data2),function(ret) {
             console.log(ret);
             console.log("渲染界面")
             _this.setState({data:ret.msg})
 
-
-
         });
     }
+    //点击“我也要请假”之后调用的函数，实现页面跳转
     ApplyToo(){
         const w=window.open('about:blank');
         w.location.href='/';
-
     }
-
+    //当点击不批时调用的函数，传被选中的行的参数给服务器端，成功后自动刷新页面
     showModal = (record) => {
         let _this=this;
         record=_this.state.rowdata[0][0];
@@ -88,7 +82,7 @@ export default class Examines extends Component{
         delay();
 
     }
-
+    //点击不批按钮，弹出Model后按确认后调用的方法
     handleOk = (e) => {
         console.log(e);
         this.setState({
@@ -97,55 +91,74 @@ export default class Examines extends Component{
 
         });
     }
+    //点击不批按钮，弹出Model后按取消后调用的方法
     handleCancel = (e) => {
         console.log(e);
         this.setState({
             visible: false,
         });
     }
+    //点击不批按钮，弹出Model后，文本框输入内容后调用的方法
     handleChange5(otherinfo) {
         this.setState({otherinfo:otherinfo});
-
     }
+    //点击批准按钮后调用，传被选中的行的参数给服务器端
     Select(record){
 
         let _this=this;
-
+        var iddata=[];
+        var departmentdata=[];
+        var isAllowdata=[];
+        var namedata=[];
+        var approverAccountdata=[];
+        var approvalRemarkdata=[];
         for(let i=0;i<_this.state.rowdata[0].length;i++){
-            record=_this.state.rowdata[0][i];
+            record=_this.state.rowdata[0];
             console.log(record);
-            var yesdata={
-            action:'taskProcess',
-            id:record.id,
-            isAllowed:1,
-            department:record.department,
-            name:'john',
-            approverAccount:'john',
 
-            approvalRemark:null
-        };
-            Common.examine(JSON.stringify(yesdata),function (ret) {
-                if(ret=='success'){
-                    alert("已批准");
-                    window.location.reload();
-                }else{
-                    alert("发生未知的错误");
-                }
-            });
+            iddata.push(record[i].id);
+            departmentdata.push(record[i].department);
+            isAllowdata.push(1)
+            namedata.push('john');
+            approverAccountdata.push('john');
+            approvalRemarkdata.push(null);
         }
+        var yesdata={
+            action:'taskProcess',
+            id:iddata,
+            isAllowed:isAllowdata,
+            department:departmentdata,
+            name:namedata,
+            approverAccount:approverAccountdata,
+            approvalRemark:approvalRemarkdata
+        };
+        console.log(yesdata);
+        Common.examine(JSON.stringify(yesdata),function (ret) {
+            if(ret=='success'){
+                alert("已批准");
+                window.location.reload();
+            }else{
+                alert("发生未知的错误");
+            }
+        });
     }
-    render(){
-        const rowSelection = {
 
+    render(){
+        //表格组件的行选择器，用于获取被选中行的数据
+        const rowSelection = {
             onChange: (selectedRowKeys, selectedRows) => {
                 console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
                 this.state.rowdata.push(selectedRows);
                 console.log(this.state.rowdata);
             },
         };
+
+        //用于表格排序功能
         let { sortedInfo, filteredInfo } = this.state;
         sortedInfo = sortedInfo || {};
         filteredInfo = filteredInfo || {};
+
+        //定义表格每列的列头，以及每列加载的数据
         const columns = [{
             title: '申请人',
             dataIndex: 'name',
@@ -184,18 +197,17 @@ export default class Examines extends Component{
         },
         ];
 
-
         return(
 
             <div style={{ background: '#ECECEC', padding: '30px' }} onLoad={this.componentWillMount}>
                 <Row gutter={16}>
-                    <Col span={2}>
+                    <Col span={4}>
                         <Button type="primary" onClick={this.ApplyToo.bind(this)}>我也要请假</Button>
                     </Col>
-                    <Col span={2}>
+                    <Col span={4}>
                         <Button type="primary" onClick={this.Select.bind(this)}>批准</Button>
                     </Col>
-                    <Col span={2}>
+                    <Col span={4}>
                         <Button type="danger" onClick={this.showModal.bind(this)}>不批</Button>
                     </Col>
 

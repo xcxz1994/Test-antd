@@ -31,7 +31,7 @@ Common = {
         $.ajax({
             url: tourl,
             type: 'GET',
-            traditional:true,
+            traditional:true,   //传数组用到的参数
             data:JSON.parse(data2),
             //timeout: 1000,
 
@@ -63,6 +63,7 @@ Common = {
         $.ajax({
             type:"GET",
             url:tourl,
+            traditional:true,  //传数组用到的参数
             data: JSON.parse(data2),
             success: function (data, textStatus, jqXHR) {
                 console.log(data);
