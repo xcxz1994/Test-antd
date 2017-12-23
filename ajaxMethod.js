@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-var tourl='http://192.168.1.144:8080/WebApplication4/askForLeaveServlet';
+var tourl='http://192.168.1.105:8080/WebApplication4/askForLeaveServlet';
 var Common;
 Common = {
     test: function (data1,successCallback) {
@@ -22,8 +22,21 @@ Common = {
             alert(textStatus); // parser error;
         }
     });
-
-        //
+    },
+	 getDa:function(data3,callback){
+        $.ajax({
+            url:tourl,
+            type:"post",
+            data:JSON.parse(data3),
+            success:function(data){
+                console.log(data);
+                var data0=eval(data);
+                callback(data0);
+            },
+            error:function(){
+                alert("error");
+            }
+        });
     },
     getData: function (data2,successCallback) {
 
