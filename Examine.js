@@ -62,7 +62,7 @@ export default class Examines extends Component{
             console.log(record);
             iddata.push(record[i].id);
             departmentdata.push(record[i].department);
-            isAllowdata.push(1)
+            isAllowdata.push(-1)
             namedata.push('john');
             approverAccountdata.push('john');
 

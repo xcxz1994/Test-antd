@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import {Can} from "./Can"
-import { Modal,DatePicker, Button,Row,Col,Input,Slider, InputNumber,Progress,Card,Form,Select,Table,Menu, Dropdown, Icon} from 'antd';
+import { Modal,DatePicker, Button,Row,Col,Input,Slider, InputNumber,Progress,Card,Form,Select,Table} from 'antd';
 const { TextArea } = Input;
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -102,20 +102,20 @@ export default class Apply extends Component {
 
             switch(allow){
                 case "不批准": {
-                    allowC = "很遗憾 你被拒绝了a";
+                    allowC = "很遗憾您的请假不通过";
                     style0="exception ";
                     percent=100;
                 }break;
                 case "未审核": {
 
                 style0="exception";
-                    allowC = "还未审核6";
+                    allowC = "未审核";
                     percent=0;
                 }break;
                 case "批准":{
 
                 style0=""
-                    allowC="恭喜您通过了";
+                    allowC="恭喜您请假通过";
                 percent=100;
                 }break;
             }
@@ -240,20 +240,20 @@ export default class Apply extends Component {
            let style0,percent,allowC;
            switch(record.approve){
                case "不批准": {
-                   allowC = "很遗憾 你被拒绝了aaa";
+                   allowC = "很遗憾，您请假未通过";
                    style0="exception ";
                    percent=100;
                }break;
                case "未审核": {
 
                    style0="exception";
-                   allowC = "还未审核6";
+                   allowC = "未审核";
                    percent=0;
                }break;
                case "批准":{
 
                    style0=""
-                   allowC="恭喜您通过了";
+                   allowC="恭喜，您请假通过了";
                    percent=100;
                }break;
            }
@@ -326,7 +326,7 @@ export default class Apply extends Component {
                                         <Option value="产假">产假</Option>
                                         <Option value="休假">休假</Option>
                                         <Option value="事假">事假</Option>
-                                        <Option value="离职">离职</Option>
+
                                     </Select>
                                 </Col>
 
@@ -425,14 +425,14 @@ export default class Apply extends Component {
                                             </Col>
                                         </Row>
                                         <Row>
-                                            <Col span={9}><p style={{fontSize:20,lineHeight:3}}>批准人:</p>
+                                            <Col span={9}><p style={{fontSize:20,lineHeight:3}}>审批人:</p>
                                             </Col>
                                             <Col span={15}><p style={{fontSize:20,lineHeight:3}}>{this.state.approver}</p>
                                             </Col>
                                         </Row>
                                         <Row>
                                             <Col span={9}>
-                                                <p style={{fontSize:20,lineHeight:3}}>批准时间:</p>
+                                                <p style={{fontSize:20,lineHeight:3}}>审批时间:</p>
                                             </Col>
                                             <Col span={15}>
                                                 <p style={{fontSize:16,lineHeight:4}}>{this.state.approvalDate}</p>
