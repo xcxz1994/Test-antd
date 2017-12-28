@@ -1,8 +1,13 @@
 import $ from 'jquery';
 
-var tourl='http://192.168.1.105:8080/WebApplication4/askForLeaveServlet';
+
+var tourl='http://10.11.1.144:8080/WebApplication4/askForLeaveServlet';
+var geturl='';
 var Common;
 Common = {
+
+
+
     test: function (data1,successCallback) {
 
         console.log(JSON.parse(data1));
@@ -23,7 +28,7 @@ Common = {
         }
     });
     },
-	 getDa:function(data3,callback){
+    getDa:function(data3,callback){
         $.ajax({
             url:tourl,
             type:"post",
@@ -93,5 +98,25 @@ Common = {
 
     },
 
+    getloginname: function (data1,successCallback) {
+
+        console.log(JSON.parse(data1));
+        $.ajax({
+            type:"GET",
+            url:geturl,
+            data: JSON.parse(data1),
+            success: function (data, textStatus, jqXHR) {
+                console.log(data);
+                successCallback(data.state)
+            },
+            error : function(XMLHttpRequest, textStatus, errorThrown) {
+//这个error函数调试时非常有用，如果解析不正确，将会弹出错误框
+                alert(XMLHttpRequest.responseText);
+                alert(XMLHttpRequest.status);
+                alert(XMLHttpRequest.readyState);
+                alert(textStatus); // parser error;
+            }
+        });
+    },
 };
 module.exports =Common;

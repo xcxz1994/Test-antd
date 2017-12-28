@@ -3,13 +3,16 @@ import ReactDOM from 'react-dom';
 import { Router,hashHistory,Route } from 'react-router';
 import Apply from './apply';
 import Examines from './Examine';
+import Login from './Login';
 export  class Routes extends Component{
+
     render(){
         console.log('Routes')
             return(
                 <Router history={hashHistory}>
-                    <Route path="/" component={Apply}/>
-                    <Route path="/a" component={Examines}/>
+                    <Route path="/" component={Login}/>
+                    <Route path="/apply" component={Apply}/>
+                    <Route path="/examines" component={Examines}/>
                 </Router>
             );
     }

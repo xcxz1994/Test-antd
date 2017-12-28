@@ -29,11 +29,13 @@ export default class Examines extends Component{
     //页面加载之前，请求服务器端的数据
     componentWillMount()  {
         console.log(this.state.data);
+
         let _this=this;
 
         var data2={
             action:"queryTaskOfManager",
-            name:'john',
+            name:this.props.location.query.name,
+            approverRole:''
 
         };
         Common.getData(JSON.stringify(data2),function(ret) {
