@@ -13,12 +13,12 @@ export default class Login extends Component {
     }
 
     hideModal = () => {
-        if(this.state.role=='ggg'){
+        if(this.state.role=='employee'){
             const w=window.open('about:blank');
-            w.location.href='#/apply?name='+this.state.name;
-        }else{
+            w.location.href='#/apply?name='+this.state.name+'&role='+this.state.role;
+        }else if(this.state.role=='jingli' || this.state.role=='zhuren'){
             const w=window.open('about:blank');
-            w.location.href='#/examines?name='+this.state.name;
+            w.location.href='#/examines?name='+this.state.name+'&role='+this.state.role;
         }
         this.setState({
             visible: false,
@@ -26,6 +26,7 @@ export default class Login extends Component {
     }
     componentWillMount() {
         console.log(this.props.location.query.role);
+        console.log(this.props.location.query.name);
         let _this = this;
         _this.setState({
             name:this.props.location.query.name,   //React获取当前URL中的参数

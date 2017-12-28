@@ -1,4 +1,5 @@
 import React,{Component} from 'react';
+
 import {Col, Row ,Button,Table,Modal,Input} from 'antd';
 import  Common from './ajaxMethod';
 const { TextArea } = Input;
@@ -16,6 +17,7 @@ export default class Examines extends Component{
             ok:0,
             yes:0,
             rowdata:[]
+
         }
     }
     //用于表格排序
@@ -35,9 +37,10 @@ export default class Examines extends Component{
         var data2={
             action:"queryTaskOfManager",
             name:this.props.location.query.name,
-            approverRole:''
+            approverRole:this.props.location.query.role,
 
         };
+        console.log(data2);
         Common.getData(JSON.stringify(data2),function(ret) {
             console.log(ret);
             console.log("渲染界面")
@@ -139,7 +142,7 @@ export default class Examines extends Component{
             departmentdata.push(record[i].department);
             isAllowdata.push(1)
             namedata.push('john');
-            approverAccountdata.push('john');
+
             approvalRemarkdata.push(null);
         }
         var yesdata={
@@ -147,10 +150,11 @@ export default class Examines extends Component{
             id:iddata,
             isAllowed:isAllowdata,
             department:departmentdata,
-            name:namedata,
-            approverAccount:approverAccountdata,
+            name:this.props.location.query.name,
+            approverRole:this.props.location.query.role,
+
             approvalRemark:approvalRemarkdata,
-            approver:approverAccountdata
+
         };
         console.log(yesdata)
         Common.examine(JSON.stringify(yesdata),function (ret) {

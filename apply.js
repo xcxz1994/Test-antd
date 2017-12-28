@@ -37,14 +37,16 @@ export default class Apply extends Component {
             inputValue: 1,
             name:'',
             value:'hello',
-             isAllowed:"",
+            isAllowed:"",
             approver:"",
             approvalDate:"",
             approvalRemark:"",
             style:"",
             percent:"",
             key:"",
-            visible: false
+            visible: false,
+            role:this.props.location.query.role,
+            leixing:''
         };
     }
     showModal = () => {
@@ -68,7 +70,7 @@ export default class Apply extends Component {
         let _this = this;
 
         var dat={
-            account:"chunyu",
+            account:this.props.location.query.name,
             action:"findTaskToBeProcessed"
         };
         console.log('componentDidMount');
@@ -137,18 +139,26 @@ export default class Apply extends Component {
         });
     }
     Submit(){
+         let _this=this;
+         if(_this.state.role=='jingli'){
+             _this.setState.leixing='2';
+         }else if(_this.state.role=='zhuren'){
+             _this.setState.leixing='3';
+         }else if(_this.state.role=='employee'){
+             _this.setState.leixing='1';
+         }
          //console.log(this.state.work);
          var data={
                 department:this.state.work,
                 action:"askForLeaveProcess",
                 name:this.state.name,
-                askAccount:"chunyu",
+                askAccount:this.props.location.query.name,
                 askType:this.state.applyclass,
                 askRemark:this.state.otherinfo,
                 leaveDate1:this.state.applytime1,
-               leaveDate2:this.state.applytime2,
-             leaveDateCount:this.state.inputValue,
-             leixing:"1"
+                leaveDate2:this.state.applytime2,
+                leaveDateCount:this.state.inputValue,
+                leixing:this.state.leixing
          };
 
         Common.test(JSON.stringify(data),function (ret) {
@@ -231,8 +241,10 @@ export default class Apply extends Component {
         console.log( selected,record,selectedRows);
         console.log(record.typ);
         console.log(selectedRows,record);
+        console.log(this.props.location.query.name);
        let dat={
-           account:"chunyu",
+
+           account:'john',
            action:"findTaskToBeProcessed"
        };
 
