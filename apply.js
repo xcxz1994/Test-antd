@@ -30,7 +30,6 @@ const columns = [{
 var b=[];
 export default class Apply extends Component {
     constructor(props) {
-
         super(props);
         this.state = {
             date: '',
@@ -48,6 +47,7 @@ export default class Apply extends Component {
             role:this.props.location.query.role,
             leixing:''
         };
+        console.log(this.state.role);
     }
     showModal = () => {
         this.setState({
@@ -65,6 +65,17 @@ export default class Apply extends Component {
         this.setState({
             visible: false,
         });
+    }
+    componentWillMount(){
+        console.log(this.state.role);
+        if("jingli" == this.state.role.toString()){
+            this.setState({leixing:'2'});
+        }else if("zhuren" == this.state.role.toString()){
+            this.setState({leixing:'3'});
+        }else if("employee" == this.state.role.toString()){
+            this.setState({leixing:'1'});
+        }
+
     }
     componentDidMount(){
         let _this = this;
@@ -139,15 +150,9 @@ export default class Apply extends Component {
         });
     }
     Submit(){
-         let _this=this;
-         if(_this.state.role=='jingli'){
-             _this.setState.leixing='2';
-         }else if(_this.state.role=='zhuren'){
-             _this.setState.leixing='3';
-         }else if(_this.state.role=='employee'){
-             _this.setState.leixing='1';
-         }
-         //console.log(this.state.work);
+         console.log(this.state.role);
+
+
          var data={
                 department:this.state.work,
                 action:"askForLeaveProcess",
@@ -294,6 +299,7 @@ export default class Apply extends Component {
 
     render(){
         console.log('asssss');
+        console.log(this.state.leixing.toString());
         return (
             <div className="gutter-example">
                         <Row  gutter={16}>

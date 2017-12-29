@@ -16,8 +16,9 @@ export default class Examines extends Component{
             otherinfo:'',
             ok:0,
             yes:0,
-            rowdata:[]
-
+            rowdata:[],
+            role:this.props.location.query.role,
+            name:this.props.location.query.name,
         }
     }
     //用于表格排序
@@ -51,7 +52,7 @@ export default class Examines extends Component{
     //点击“我也要请假”之后调用的函数，实现页面跳转
     ApplyToo(){
         const w=window.open('about:blank');
-        w.location.href='/';
+        w.location.href='#/apply?name='+this.state.name+'&role='+this.state.role;
     }
     //当点击不批时调用的函数，传被选中的行的参数给服务器端，成功后自动刷新页面
     showModal = (record) => {
