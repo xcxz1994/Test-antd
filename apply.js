@@ -305,7 +305,7 @@ export default class Apply extends Component {
 
     render(){
 
-           alert(this.state.approvero);
+           //alert(this.state.approvero);
         console.log(this.state.approvero);
         return (
             <div className="gutter-example">
