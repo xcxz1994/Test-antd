@@ -51,7 +51,7 @@ export  class Can extends Component
     }
     componentDidMount(){
 
-this.hua()
+this.onChange()
 
 
 
