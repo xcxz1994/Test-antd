@@ -249,7 +249,7 @@ export default class Apply extends Component {
         console.log(this.props.location.query.name);
        let dat={
 
-           account:'john',
+           account:this.props.location.query.name,
            action:"findTaskToBeProcessed"
        };
 

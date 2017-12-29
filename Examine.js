@@ -69,8 +69,7 @@ export default class Examines extends Component{
             iddata.push(record[i].id);
             departmentdata.push(record[i].department);
             isAllowdata.push(-1)
-            namedata.push('john');
-            approverAccountdata.push('john');
+
 
         }
         var delay = function(){
@@ -79,10 +78,10 @@ export default class Examines extends Component{
                 id:iddata,
                 isAllowed:isAllowdata,
                 department:departmentdata,
-                name:namedata,
-                approverAccount:approverAccountdata,
+                name:this.props.location.query.name,
+                approverRole:this.props.location.query.role,
                 approvalRemark:[_this.state.otherinfo],
-                approver:approverAccountdata,
+
 
             };
             if(_this.state.ok==1){
@@ -142,8 +141,6 @@ export default class Examines extends Component{
             iddata.push(record[i].id);
             departmentdata.push(record[i].department);
             isAllowdata.push(1)
-            namedata.push('john');
-
             approvalRemarkdata.push(null);
         }
         var yesdata={
@@ -153,7 +150,6 @@ export default class Examines extends Component{
             department:departmentdata,
             name:this.props.location.query.name,
             approverRole:this.props.location.query.role,
-
             approvalRemark:approvalRemarkdata,
 
         };
