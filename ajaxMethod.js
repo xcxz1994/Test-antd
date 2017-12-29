@@ -1,5 +1,5 @@
 import $ from 'jquery';
-var tourl='http://192.168.1.141:8080/WebApplication4/askForLeaveServlet';
+var tourl='http://192.168.1.222:8080/WebApplication4/askForLeaveServlet';
 var Common;
 Common = {
 

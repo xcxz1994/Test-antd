@@ -16,7 +16,7 @@ export default class Login extends Component {
         if(this.state.role=='employee'){
             const w=window.open('about:blank');
             w.location.href='#/apply?name='+this.state.name+'&role='+this.state.role;
-        }else if(this.state.role=='jingli' || this.state.role=='zhuren'){
+        }else if(this.state.role=='jingli' || this.state.role=='zhuren' || this.state.role=='dongshizhang'){
             const w=window.open('about:blank');
             w.location.href='#/examines?name='+this.state.name+'&role='+this.state.role;
         }

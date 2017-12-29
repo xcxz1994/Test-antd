@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import {Can} from "./Can"
-import { Modal,DatePicker, Button,Row,Col,Input,Slider, InputNumber,Progress,Card,Form,Select,Table} from 'antd';
+import { Modal,DatePicker, Button,Row,Col,Input,Slider, InputNumber,Progress,Card,Form,Select,Table,Alert} from 'antd';
 const { TextArea } = Input;
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -169,6 +169,7 @@ export default class Apply extends Component {
         Common.test(JSON.stringify(data),function (ret) {
             if(ret=='success'){
                 alert("申请成功");
+                //{<Alert message="申请成功" type="success" />}
             }else{
                 alert("申请失败");
             }

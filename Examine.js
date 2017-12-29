@@ -63,8 +63,8 @@ export default class Examines extends Component{
         var namedata=[];
         var approverAccountdata=[];
 
-        for(let i=0;i<_this.state.rowdata[0].length;i++){
-            record=_this.state.rowdata[0];
+        for(let i=0;i<_this.state.rowdata[1].length;i++){
+            record=_this.state.rowdata[1];
             console.log(record);
             iddata.push(record[i].id);
             departmentdata.push(record[i].department);
@@ -134,10 +134,9 @@ export default class Examines extends Component{
         var namedata=[];
         var approverAccountdata=[];
         var approvalRemarkdata=[];
-        for(let i=0;i<_this.state.rowdata[0].length;i++){
-            record=_this.state.rowdata[0];
+        for(let i=0;i<_this.state.rowdata[1].length;i++){
+            record=_this.state.rowdata[1];
             console.log(record);
-
             iddata.push(record[i].id);
             departmentdata.push(record[i].department);
             isAllowdata.push(1)
