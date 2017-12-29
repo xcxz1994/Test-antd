@@ -33,6 +33,7 @@ export default class Apply extends Component {
         super(props);
         this.state = {
             date: '',
+            approvero:"",
             inputValue: 1,
             name:'',
             value:'hello',
@@ -89,6 +90,7 @@ export default class Apply extends Component {
                 Common.getDa(JSON.stringify(dat),function(data){
             let date,date1,allow,approve,approveDate,approveRemark,allowC,style0,percent;let a={};
             let tv;
+
 
             for (var i=1;i<data.msg.length;i++){
                 date1=new Date(data.msg[0].askDate).getTime();//比较时间先后来获取当前最近一次请假详情
@@ -281,6 +283,8 @@ export default class Apply extends Component {
              if(record.time==data.msg[b].askDate){
                //(data.msg[b].askDate) ;
               // alert(record.approve);
+
+                 localStorage.setItem("approvero",data.msg[b].approverRole);
                _this.setState({
                    isAllowed:allowC,
                    approver:data.msg[b].approver,
@@ -288,6 +292,7 @@ export default class Apply extends Component {
                    approvalRemark:data.msg[b].approvalRemark ,
                    style:style0,
                    percent:percent,
+                   approvero:data.msg[b].approverRole,
                });
 
           }}
@@ -298,8 +303,9 @@ export default class Apply extends Component {
     }
 
     render(){
-        console.log('asssss');
-        console.log(this.state.leixing.toString());
+
+           alert(this.state.approvero);
+        console.log(this.state.approvero);
         return (
             <div className="gutter-example">
                         <Row  gutter={16}>
@@ -420,9 +426,8 @@ export default class Apply extends Component {
                                             onCancel={this.handleCancel}
                                         >
 
-                                            <Can/>
-                                            <p>版权所有</p>
-                                            <p>盗版必究</p>
+                                            <Can value={this.state.approvero}/>
+
                                             <p></p>
                                         </Modal>
 
